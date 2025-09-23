@@ -1,590 +1,159 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-	<title>VedaX — Ayurvedic Blockchain Traceability</title>
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-	<script src="https://cdn.tailwindcss.com"></script>
-	<script>
-		tailwind.config = {
-			theme: {
-				extend: {
-					colors: {
-						primary: '#2E7D32',
-						beige: '#F5F5DC',
-					},
-					fontFamily: {
-						poppins: ['Poppins', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-						roboto: ['Roboto', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-					},
-					boxShadow: {
-						soft: '0 4px 20px rgba(0,0,0,0.08)'
-					}
-				}
-			}
-		}
-	</script>
-	<style>
-		:root{ --primary:#2E7D32; --beige:#F5F5DC }
-		html, body { height: 100%; }
-		body { font-family: 'Poppins', 'Roboto', ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif; }
-		.section { display: none; }
-		.section.active { display: block; }
-		input[type="date"]::-webkit-calendar-picker-indicator { filter: hue-rotate(60deg) saturate(120%); }
-		.safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
-	</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VedaX —From Soil To Soul</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-6K0Tn2gW9iGm9l2bF9s4uYVgK6s7x4b3u7A3f3n0VbQ2FZBtT2m8xJxCwqfG7m3i2bUqf3+v+zj5Vg8m0Jwq6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="styles.css">
 </head>
-<body class="min-h-screen bg-beige text-slate-800">
-	<!-- NAVBAR -->
-	<header class="sticky top-0 z-30 bg-white/90 backdrop-blur border-b border-emerald-900/10">
-		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-			<div class="flex items-center justify-between h-16">
-				<div class="flex items-center gap-3">
-					<div class="w-9 h-9 rounded-lg bg-primary/10 grid place-items-center">
-						<!-- Leaf icon -->
-						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#2E7D32" class="w-5 h-5"><path d="M5 3v2.5A9.5 9.5 0 0 0 14.5 15H17a8 8 0 0 1-8 8h-.5A6.5 6.5 0 0 1 2 16.5V16a13 13 0 0 1 13-13h.5A8.5 8.5 0 0 1 24 11.5V12a10 10 0 0 1-10 10h-1.5"/></svg>
-					</div>
-					<div class="leading-tight">
-						<p class="font-semibold text-slate-900">VedaX</p>
-						<p class="text-xs text-slate-500">Ayurvedic Blockchain Traceability</p>
-					</div>
-				</div>
-				<nav class="hidden md:flex items-center gap-2">
-					<button data-target="start" class="nav-btn px-3 py-2 rounded-md text-sm font-medium hover:bg-beige/60">Start</button>
-					<button data-target="auth" class="nav-btn px-3 py-2 rounded-md text-sm font-medium hover:bg-beige/60">Login</button>
-					<button data-target="farmer" class="nav-btn px-3 py-2 rounded-md text-sm font-medium hover:bg-beige/60">Farmer</button>
-					<button data-target="collector" class="nav-btn px-3 py-2 rounded-md text-sm font-medium hover:bg-beige/60">Collector</button>
-					<button data-target="processor" class="nav-btn px-3 py-2 rounded-md text-sm font-medium hover:bg-beige/60">Processor</button>
-					<button data-target="consumer" class="nav-btn px-3 py-2 rounded-md text-sm font-medium hover:bg-beige/60">Consumer</button>
-					<button data-target="trace" class="nav-btn px-3 py-2 rounded-md text-sm font-medium bg-primary text-white">Trace</button>
-				</nav>
-				<!-- Mobile menu -->
-				<div class="md:hidden">
-					<select id="mobileNav" class="px-3 py-2 rounded-md text-sm font-medium border border-slate-200 bg-white">
-						<option value="start" selected>Start</option>
-						<option value="auth">Login</option>
-						<option value="farmer">Farmer</option>
-						<option value="collector">Collector</option>
-						<option value="processor">Processor</option>
-						<option value="consumer">Consumer</option>
-						<option value="trace">Trace</option>
-					</select>
-				</div>
-			</div>
-		</div>
-	</header>
+<body>
+    <header class="site-header">
+        <nav class="navbar" aria-label="Main Navigation">
+            <div class="brand">
+                <img src="assets/VedaX_logo-removebg-preview.png" alt="VedaX logo" class="brand-logo">
+                <span class="brand-name" data-i18n="brand">VedaX</span>
+            </div>
+            <button class="nav-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Toggle navigation">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+            <ul id="nav-links" class="nav-links">
+                <li><a href="#home" data-i18n="nav.home">Home</a></li>
+                <li><a href="#cards" data-i18n="nav.sections">Sections</a></li>
+                <li><a href="#about" data-i18n="nav.about">About</a></li>
+                <li><a href="#support" data-i18n="nav.support">Support</a></li>
+            </ul>
+            <div class="lang-switcher">
+                <label class="visually-hidden" for="language-select" data-i18n="aria.language">Language</label>
+                <select id="language-select" aria-label="Language selector">
+                    <option value="en">English</option>
+                    <option value="hi">हिन्दी</option>
+                </select>
+            </div>
+        </nav>
+    </header>
 
-	<!-- HERO / INTRO (optional quick banner) -->
-	<section class="bg-gradient-to-b from-white to-beige/60 border-b border-emerald-900/10">
-		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-			<div class="grid md:grid-cols-2 items-center gap-6">
-				<div>
-					<h1 class="text-2xl sm:text-3xl font-semibold text-slate-900">Trust your herbs, from farm to shelf.</h1>
-					<p class="mt-2 text-slate-600">Capture provenance from Farmers, Collectors, and Processors—then let Consumers verify on-chain.</p>
-					<div class="mt-4 flex gap-3">
-						<a href="#consumer" data-target="consumer" class="nav-link inline-flex items-center gap-2 bg-primary text-white px-4 py-2 rounded-md shadow-soft">
-							<span>Scan QR</span>
-							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4"><path d="M3 3h8v8H3V3zm2 2v4h4V5H5zm6-2h2v4h4v2h-6V3zm8 0h2v2h-2V3zM3 13h2v2H3v-2zm4 0h4v4H7v-4zm-4 6h2v2H3v-2zm6 0h2v2H9v-2zm4-6h2v2h-2v-2zm4 0h4v4h-4v-4zm0 6h2v2h-2v-2zm4 0h2v2h-2v-2z"/></svg>
-						</a>
-						<a href="#farmer" data-target="farmer" class="nav-link inline-flex items-center gap-2 px-4 py-2 rounded-md border border-primary text-primary hover:bg-primary/5">
-							<span>Add Herb</span>
-							<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
-						</a>
-					</div>
-				</div>
-				<div class="relative">
-					<div class="aspect-[16/10] w-full rounded-xl border border-emerald-900/10 bg-white p-4 shadow-soft">
-						<div class="h-full w-full rounded-lg bg-gradient-to-br from-primary/10 via-beige/60 to-white grid place-items-center text-center">
-							<div>
-								<p class="text-sm text-primary font-medium">Blockchain Verified</p>
-								<p class="text-xl font-semibold text-slate-900">Transparent Herbal Journey</p>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
+    <section id="home" class="hero" role="banner" aria-label="Hero">
+        <div class="hero-content">
+            <h1 data-i18n="hero.title">Ayurvedic Herb Traceability</h1>
+            <p class="hero-sub" data-i18n="hero.subtitle">Trust every step: farm to formulation</p>
+            <div class="hero-cta">
+                <input id="batch-input-hero" type="text" inputmode="text" autocomplete="off" placeholder="e.g. BATCH123" aria-label="Batch ID">
+                <button id="cta-button" class="btn btn-primary">
+                    <i class="fa-solid fa-qrcode" aria-hidden="true"></i>
+                    <span data-i18n="hero.cta">Scan QR / Search Batch</span>
+                </button>
+            </div>
+        </div>
+    </section>
 
-	<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pb-28 md:pb-8">
-		<!-- START SECTION -->
-		<section id="start" class="section active">
-			<div class="max-w-2xl mx-auto bg-white rounded-xl shadow-soft border border-emerald-900/10 p-6">
-				<div class="flex items-center gap-3">
-					<div class="w-10 h-10 rounded-lg bg-primary/10 grid place-items-center">
-						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#2E7D32" class="w-5 h-5"><path d="M5 3v2.5A9.5 9.5 0 0 0 14.5 15H17a8 8 0 0 1-8 8h-.5A6.5 6.5 0 0 1 2 16.5V16a13 13 0 0 1 13-13h.5A8.5 8.5 0 0 1 24 11.5V12a10 10 0 0 1-10 10h-1.5"/></svg>
-					</div>
-					<div>
-						<h2 class="text-xl font-semibold text-slate-900">Welcome to VedaX</h2>
-						<p class="text-sm text-slate-600">Sign in or create your account to get started.</p>
-					</div>
-				</div>
-				<div class="mt-6 grid sm:grid-cols-2 gap-3">
-					<button class="go-auth rounded-md bg-primary text-white py-3 px-4" data-auth="login">Sign in</button>
-					<button class="go-auth rounded-md border border-primary text-primary py-3 px-4" data-auth="signup">Create account</button>
-				</div>
-				<div class="mt-4 text-xs text-slate-500">
-					Or explore: 
-					<a href="#trace" data-target="trace" class="nav-link text-primary">Traceability</a>
-					·
-					<a href="#consumer" data-target="consumer" class="nav-link text-primary">Scan QR</a>
-				</div>
-			</div>
-		</section>
+    <main>
+        <section id="cards" class="cards-section" aria-labelledby="cards-title">
+            <h2 id="cards-title" data-i18n="cards.title">Get Started</h2>
+            <div class="cards-grid">
+                <a class="card" href="#" role="button" aria-label="For Farmers">
+                    <div class="card-icon"><i class="fa-solid fa-seedling" aria-hidden="true"></i></div>
+                    <h3 data-i18n="cards.farmers.title">For Farmers</h3>
+                    <p data-i18n="cards.farmers.desc">Record harvest, add GPS and photos</p>
+                </a>
+                <a class="card" href="#" role="button" aria-label="For Processors">
+                    <div class="card-icon"><i class="fa-solid fa-industry" aria-hidden="true"></i></div>
+                    <h3 data-i18n="cards.processors.title">For Processors</h3>
+                    <p data-i18n="cards.processors.desc">Log drying, grinding, packaging</p>
+                </a>
+                <a class="card" href="#" role="button" aria-label="For Labs">
+                    <div class="card-icon"><i class="fa-solid fa-flask" aria-hidden="true"></i></div>
+                    <h3 data-i18n="cards.labs.title">For Labs</h3>
+                    <p data-i18n="cards.labs.desc">Upload test results</p>
+                </a>
+                <a class="card" href="#consumer" role="button" aria-label="For Consumers">
+                    <div class="card-icon"><i class="fa-solid fa-store" aria-hidden="true"></i></div>
+                    <h3 data-i18n="cards.consumers.title">For Consumers</h3>
+                    <p data-i18n="cards.consumers.desc">Scan QR, see provenance story</p>
+                </a>
+            </div>
+        </section>
 
-		<!-- 1) AUTH SECTION -->
-		<section id="auth" class="section">
-			<div class="max-w-md mx-auto bg-white rounded-xl shadow-soft border border-emerald-900/10 p-6">
-				<h2 class="text-xl font-semibold text-slate-900">Welcome back</h2>
-				<p class="text-sm text-slate-600">Login or create an account to continue.</p>
-				<div class="mt-6 grid grid-cols-2 gap-2 p-1 bg-beige/60 rounded-lg text-sm">
-					<button data-auth-tab="login" class="auth-tab px-3 py-2 rounded-md bg-white shadow-soft border border-emerald-900/10">Login</button>
-					<button data-auth-tab="signup" class="auth-tab px-3 py-2 rounded-md hover:bg-white">Sign Up</button>
-				</div>
-				<!-- Login form -->
-				<form id="loginForm" class="mt-6 space-y-4">
-					<div>
-						<label class="block text-sm font-medium">Email</label>
-						<input type="email" class="mt-1 w-full rounded-md border border-slate-200 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary/30" placeholder="you@example.com" />
-					</div>
-					<div>
-						<label class="block text-sm font-medium">Password</label>
-						<input type="password" class="mt-1 w-full rounded-md border border-slate-200 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary/30" placeholder="••••••••" />
-					</div>
-					<button type="button" data-target="farmer" class="nav-link w-full bg-primary text-white py-2 rounded-md">Continue</button>
-				</form>
-				<!-- Signup form -->
-				<form id="signupForm" class="mt-6 space-y-4 hidden">
-					<div class="grid grid-cols-2 gap-3">
-						<div>
-							<label class="block text-sm font-medium">First name</label>
-							<input type="text" class="mt-1 w-full rounded-md border border-slate-200 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary/30" placeholder="Asha" />
-						</div>
-						<div>
-							<label class="block text-sm font-medium">Last name</label>
-							<input type="text" class="mt-1 w-full rounded-md border border-slate-200 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary/30" placeholder="Nair" />
-						</div>
-					</div>
-					<div>
-						<label class="block text-sm font-medium">Email</label>
-						<input type="email" class="mt-1 w-full rounded-md border border-slate-200 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary/30" placeholder="you@example.com" />
-					</div>
-					<div>
-						<label class="block text-sm font-medium">Create password</label>
-						<input type="password" class="mt-1 w-full rounded-md border border-slate-200 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary/30" placeholder="••••••••" />
-					</div>
-					<button type="button" data-target="farmer" class="nav-link w-full bg-primary text-white py-2 rounded-md">Create account</button>
-				</form>
-			</div>
-		</section>
+        <section id="about" class="about-section" aria-labelledby="about-title">
+            <h2 id="about-title" data-i18n="about.title">How Traceability Works</h2>
+            <div class="flow">
+                <div class="flow-step" aria-label="Harvest">
+                    <i class="fa-solid fa-leaf" aria-hidden="true"></i>
+                    <span data-i18n="about.harvest">Harvest</span>
+                </div>
+                <div class="flow-arrow" aria-hidden="true">→</div>
+                <div class="flow-step" aria-label="Lab">
+                    <i class="fa-solid fa-flask" aria-hidden="true"></i>
+                    <span data-i18n="about.lab">Lab</span>
+                </div>
+                <div class="flow-arrow" aria-hidden="true">→</div>
+                <div class="flow-step" aria-label="Processing">
+                    <i class="fa-solid fa-industry" aria-hidden="true"></i>
+                    <span data-i18n="about.process">Processing</span>
+                </div>
+                <div class="flow-arrow" aria-hidden="true">→</div>
+                <div class="flow-step" aria-label="Shop">
+                    <i class="fa-solid fa-shop" aria-hidden="true"></i>
+                    <span data-i18n="about.shop">Shop</span>
+                </div>
+                <div class="flow-arrow" aria-hidden="true">→</div>
+                <div class="flow-step" aria-label="Consumer">
+                    <i class="fa-solid fa-user" aria-hidden="true"></i>
+                    <span data-i18n="about.consumer">Consumer</span>
+                </div>
+            </div>
+        </section>
 
-		<!-- 2) FARMER DASHBOARD -->
-		<section id="farmer" class="section">
-			<div class="flex items-center justify-between mb-4">
-				<h2 class="text-xl font-semibold text-slate-900 inline-flex items-center gap-2">
-					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#2E7D32" class="w-5 h-5"><path d="M12 2C8 6 8 10 8 10s4 0 8-4 4-8 4-8-4 0-8 4zM4 14c4-4 8-4 8-4s0 4-4 8-8 4-8 4 0-4 4-8z"/></svg>
-					Farmer Dashboard
-				</h2>
-				<div class="text-sm text-slate-600">Add harvested herb details</div>
-			</div>
-			<div class="grid md:grid-cols-3 gap-6">
-				<form class="md:col-span-2 bg-white rounded-xl shadow-soft border border-emerald-900/10 p-6 space-y-4">
-					<div>
-						<label class="block text-sm font-medium">Herb name</label>
-						<input type="text" placeholder="Tulsi (Holy Basil)" class="mt-1 w-full rounded-md border border-slate-200 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary/30" />
-					</div>
-					<div class="grid sm:grid-cols-2 gap-4">
-						<div>
-							<label class="block text-sm font-medium">Harvest date</label>
-							<input type="date" class="mt-1 w-full rounded-md border border-slate-200 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary/30" />
-						</div>
-						<div>
-							<label class="block text-sm font-medium">Geo-tag (Lat, Long)</label>
-							<input type="text" placeholder="10.0889, 76.3869" class="mt-1 w-full rounded-md border border-slate-200 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary/30" />
-						</div>
-					</div>
-					<div>
-						<label class="block text-sm font-medium">Upload herb image</label>
-						<input type="file" accept="image/*" class="mt-1 w-full rounded-md border border-slate-200 px-3 py-2 file:mr-4 file:py-2 file:px-3 file:rounded-md file:border-0 file:bg-primary file:text-white" />
-					</div>
-					<div>
-						<label class="block text-sm font-medium">Notes</label>
-						<textarea rows="3" placeholder="Soil conditions, irrigation, organic proof, etc." class="mt-1 w-full rounded-md border border-slate-200 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary/30"></textarea>
-					</div>
-					<div class="flex gap-3">
-						<button type="button" class="px-4 py-2 rounded-md bg-primary text-white">Save & Generate QR</button>
-						<button type="button" data-target="collector" class="nav-link px-4 py-2 rounded-md border border-primary text-primary">Send to Collector</button>
-					</div>
-				</form>
-				<div class="bg-white rounded-xl shadow-soft border border-emerald-900/10 p-6">
-					<p class="text-sm font-medium text-slate-900">Recent entries</p>
-					<ul class="mt-3 space-y-3 text-sm">
-						<li class="flex items-center justify-between">
-							<span>Tulsi — 2025-09-10</span>
-							<a href="#trace" data-target="trace" class="nav-link text-primary">View trace</a>
-						</li>
-						<li class="flex items-center justify-between">
-							<span>Amla — 2025-09-08</span>
-							<a href="#trace" data-target="trace" class="nav-link text-primary">View trace</a>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</section>
+        <section id="consumer" class="consumer-section" aria-labelledby="consumer-title">
+            <h2 id="consumer-title" data-i18n="consumer.title">Consumer QR / Batch Lookup</h2>
+            <div class="lookup">
+                <label class="visually-hidden" for="batch-input" data-i18n="consumer.inputLabel">Enter Batch ID</label>
+                <input id="batch-input" type="text" inputmode="text" autocomplete="off" placeholder="e.g. BATCH123" aria-describedby="batch-help">
+                <button id="provenance-button" class="btn btn-secondary">
+                    <i class="fa-solid fa-map-location-dot" aria-hidden="true"></i>
+                    <span data-i18n="consumer.button">View Provenance</span>
+                </button>
+                <div id="batch-help" class="help-text" data-i18n="consumer.help">Tip: Try BATCH123 for a demo.</div>
+            </div>
+            <div id="provenance" class="provenance" aria-live="polite"></div>
+        </section>
 
-		<!-- 2b) COLLECTOR DASHBOARD -->
-		<section id="collector" class="section">
-			<div class="flex items-center justify-between mb-4">
-				<h2 class="text-xl font-semibold text-slate-900 inline-flex items-center gap-2">
-					<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2E7D32" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M3 3h18M3 9h18M3 15h18M3 21h18"/></svg>
-					Collector Dashboard
-				</h2>
-				<div class="text-sm text-slate-600">Aggregate lots and handoff</div>
-			</div>
-			<div class="grid md:grid-cols-3 gap-6">
-				<form class="md:col-span-2 bg-white rounded-xl shadow-soft border border-emerald-900/10 p-6 space-y-4">
-					<div class="grid sm:grid-cols-2 gap-4">
-						<div>
-							<label class="block text-sm font-medium">Batch/Lot ID</label>
-							<input type="text" placeholder="TUL-2025-0912-01" class="mt-1 w-full rounded-md border border-slate-200 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary/30" />
-						</div>
-						<div>
-							<label class="block text-sm font-medium">Weight (kg)</label>
-							<input type="number" step="0.01" placeholder="25.5" class="mt-1 w-full rounded-md border border-slate-200 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary/30" />
-						</div>
-					</div>
-					<div class="grid sm:grid-cols-2 gap-4">
-						<div>
-							<label class="block text-sm font-medium">Quality grade</label>
-							<select class="mt-1 w-full rounded-md border border-slate-200 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary/30">
-								<option>A</option>
-								<option>B</option>
-								<option>C</option>
-							</select>
-						</div>
-						<div>
-							<label class="block text-sm font-medium">Storage location</label>
-							<input type="text" placeholder="Warehouse 3, Kochi" class="mt-1 w-full rounded-md border border-slate-200 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary/30" />
-						</div>
-					</div>
-					<div>
-						<label class="block text-sm font-medium">Upload delivery document</label>
-						<input type="file" class="mt-1 w-full rounded-md border border-slate-200 px-3 py-2 file:mr-4 file:py-2 file:px-3 file:rounded-md file:border-0 file:bg-primary file:text-white" />
-					</div>
-					<div class="flex gap-3">
-						<button type="button" class="px-4 py-2 rounded-md bg-primary text-white">Save Batch</button>
-						<button type="button" data-target="processor" class="nav-link px-4 py-2 rounded-md border border-primary text-primary">Send to Processor</button>
-					</div>
-				</form>
-				<div class="bg-white rounded-xl shadow-soft border border-emerald-900/10 p-6">
-					<p class="text-sm font-medium text-slate-900">Incoming from Farmers</p>
-					<ul class="mt-3 space-y-3 text-sm">
-						<li class="flex items-center justify-between"><span>Tulsi lot — 25kg</span><span class="text-emerald-700">Ready</span></li>
-						<li class="flex items-center justify-between"><span>Amla lot — 12kg</span><span class="text-amber-700">Pending</span></li>
-					</ul>
-				</div>
-			</div>
-		</section>
+        <section id="support" class="support-section" aria-labelledby="support-title">
+            <h2 id="support-title" data-i18n="support.title">Support & FAQs</h2>
+            <div class="faqs">
+                <details>
+                    <summary data-i18n="faq.q1">What is traceability?</summary>
+                    <p data-i18n="faq.a1">Traceability links every batch from farm to consumer.</p>
+                </details>
+                <details>
+                    <summary data-i18n="faq.q2">How do I add harvest data?</summary>
+                    <p data-i18n="faq.a2">Farmers can record harvest with photos and GPS.</p>
+                </details>
+                <details>
+                    <summary data-i18n="faq.q3">Are lab results verified?</summary>
+                    <p data-i18n="faq.a3">Yes, labs upload certificates for each batch.</p>
+                </details>
+            </div>
+            <div class="contact">
+                <h3 data-i18n="support.contact">Contact</h3>
+                <p><i class="fa-solid fa-envelope"></i> support@vedax.example</p>
+                <p><i class="fa-solid fa-phone"></i> +91 99999 99999</p>
+            </div>
+        </section>
+    </main>
 
-		<!-- 3) PROCESSOR DASHBOARD -->
-		<section id="processor" class="section">
-			<div class="flex items-center justify-between mb-4">
-				<h2 class="text-xl font-semibold text-slate-900 inline-flex items-center gap-2">
-					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#2E7D32" class="w-5 h-5"><path d="M3 6h18v2H3zM3 11h18v2H3zM3 16h18v2H3z"/></svg>
-					Processor Dashboard
-				</h2>
-				<div class="text-sm text-slate-600">Document processing & packaging</div>
-			</div>
-			<div class="grid md:grid-cols-3 gap-6">
-				<form class="md:col-span-2 bg-white rounded-xl shadow-soft border border-emerald-900/10 p-6 space-y-4">
-					<div class="grid sm:grid-cols-2 gap-4">
-						<div>
-							<label class="block text-sm font-medium">Input Batch/Lot ID</label>
-							<input type="text" placeholder="TUL-2025-0912-01" class="mt-1 w-full rounded-md border border-slate-200 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary/30" />
-						</div>
-						<div>
-							<label class="block text-sm font-medium">Processing date</label>
-							<input type="date" class="mt-1 w-full rounded-md border border-slate-200 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary/30" />
-						</div>
-					</div>
-					<div>
-						<label class="block text-sm font-medium">Processing steps</label>
-						<textarea rows="3" placeholder="Cleaning → Drying → Powdering" class="mt-1 w-full rounded-md border border-slate-200 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary/30"></textarea>
-					</div>
-					<div class="grid sm:grid-cols-3 gap-4">
-						<div>
-							<label class="block text-sm font-medium">Output form</label>
-							<select class="mt-1 w-full rounded-md border border-slate-200 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary/30">
-								<option>Powder</option>
-								<option>Extract</option>
-								<option>Capsule</option>
-							</select>
-						</div>
-						<div>
-							<label class="block text-sm font-medium">Packaging date</label>
-							<input type="date" class="mt-1 w-full rounded-md border border-slate-200 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary/30" />
-						</div>
-						<div>
-							<label class="block text-sm font-medium">Consumer SKU / QR ID</label>
-							<input type="text" placeholder="SKU-AYUR-001" class="mt-1 w-full rounded-md border border-slate-200 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary/30" />
-						</div>
-					</div>
-					<div class="flex gap-3">
-						<button type="button" class="px-4 py-2 rounded-md bg-primary text-white">Save Processing</button>
-						<button type="button" data-target="trace" class="nav-link px-4 py-2 rounded-md border border-primary text-primary">Publish to Chain</button>
-					</div>
-				</form>
-				<div class="bg-white rounded-xl shadow-soft border border-emerald-900/10 p-6">
-					<p class="text-sm font-medium text-slate-900">Recent processed</p>
-					<ul class="mt-3 space-y-3 text-sm">
-						<li class="flex items-center justify-between"><span>Tulsi powder — 1kg</span><span class="text-emerald-700">Published</span></li>
-						<li class="flex items-center justify-between"><span>Amla extract — 500g</span><span class="text-amber-700">Pending</span></li>
-					</ul>
-				</div>
-			</div>
-		</section>
+    <footer class="site-footer" aria-label="Footer">
+        <div class="footer-inner">
+            <span>© <span id="year"></span> <span data-i18n="brand">VedaX Trace</span></span>
+            <span class="footer-motif" aria-hidden="true">🌱</span>
+        </div>
+    </footer>
 
-		<!-- 4) CONSUMER QR SCAN -->
-		<section id="consumer" class="section">
-			<div class="max-w-lg mx-auto bg-white rounded-xl shadow-soft border border-emerald-900/10 p-6">
-				<h2 class="text-xl font-semibold text-slate-900 inline-flex items-center gap-2">
-					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#2E7D32" class="w-5 h-5"><path d="M3 3h8v8H3V3zm2 2v4h4V5H5zm6-2h2v4h4v2h-6V3zm8 0h2v2h-2V3zM3 13h2v2H3v-2zm4 0h4v4H7v-4zm-4 6h2v2H3v-2zm6 0h2v2H9v-2zm4-6h2v2h-2v-2zm4 0h4v4h-4v-4zm0 6h2v2h-2v-2zm4 0h2v2h-2v-2z"/></svg>
-					Scan or Enter QR
-				</h2>
-				<p class="text-sm text-slate-600 mt-1">Paste the QR/Trace ID or simulate a scan.</p>
-				<div class="mt-4 space-y-3">
-					<input id="qrInput" type="text" placeholder="e.g., TUL-2025-0912-01" class="w-full rounded-md border border-slate-200 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary/30" />
-					<div class="grid grid-cols-2 gap-3">
-						<button id="btnOpenTrace" class="bg-primary text-white py-2 rounded-md">View Trace</button>
-						<label class="relative grid place-items-center cursor-pointer rounded-md border border-dashed border-slate-300 py-2 text-sm text-slate-700">
-							<input id="qrFile" type="file" accept="image/*" class="absolute inset-0 opacity-0 cursor-pointer" />
-							<span>Upload QR Image</span>
-						</label>
-					</div>
-					<p class="text-xs text-slate-500">Tip: Try the example ID <span class="font-medium">TUL-2025-0912-01</span>.</p>
-				</div>
-			</div>
-		</section>
-
-		<!-- 5) TRACEABILITY PAGE -->
-		<section id="trace" class="section">
-			<div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-4">
-				<h2 class="text-xl font-semibold text-slate-900 inline-flex items-center gap-2">
-					<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2E7D32" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M6 18L18 6"/></svg>
-					Herb Traceability
-				</h2>
-				<div class="flex items-center gap-2">
-					<span id="verifyBadge" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
-						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#047857" class="w-3.5 h-3.5"><path d="M9 12l2 2 4-4 2 2-6 6-4-4 2-2z"/></svg>
-						Verified on-chain
-					</span>
-					<span id="traceId" class="text-xs text-slate-500">Trace ID: TUL-2025-0912-01</span>
-				</div>
-			</div>
-
-			<div class="grid lg:grid-cols-3 gap-6">
-				<!-- Timeline -->
-				<ol class="lg:col-span-2 relative border-s border-emerald-900/10 pl-4">
-					<li class="mb-6">
-						<div class="absolute -left-2.5 mt-1 w-5 h-5 rounded-full bg-primary"></div>
-						<div class="bg-white rounded-xl shadow-soft border border-emerald-900/10 p-4">
-							<div class="flex items-center justify-between">
-								<p class="font-medium text-slate-900">Farm</p>
-								<span class="text-xs text-slate-500">2025-09-10</span>
-							</div>
-							<p class="mt-1 text-sm text-slate-700">Tulsi harvested in Kerala. Geo: 10.0889, 76.3869</p>
-						</div>
-					</li>
-					<li class="mb-6">
-						<div class="absolute -left-2.5 mt-1 w-5 h-5 rounded-full bg-primary"></div>
-						<div class="bg-white rounded-xl shadow-soft border border-emerald-900/10 p-4">
-							<div class="flex items-center justify-between">
-								<p class="font-medium text-slate-900">Collector</p>
-								<span class="text-xs text-slate-500">2025-09-11</span>
-							</div>
-							<p class="mt-1 text-sm text-slate-700">Batch aggregated. Weight: 25.5kg. Quality: A</p>
-						</div>
-					</li>
-					<li class="mb-6">
-						<div class="absolute -left-2.5 mt-1 w-5 h-5 rounded-full bg-primary"></div>
-						<div class="bg-white rounded-xl shadow-soft border border-emerald-900/10 p-4">
-							<div class="flex items-center justify-between">
-								<p class="font-medium text-slate-900">Processor</p>
-								<span class="text-xs text-slate-500">2025-09-12</span>
-							</div>
-							<p class="mt-1 text-sm text-slate-700">Cleaning → Drying → Powdering. Packaged as powder, 1kg.</p>
-						</div>
-					</li>
-					<li>
-						<div class="absolute -left-2.5 mt-1 w-5 h-5 rounded-full bg-primary"></div>
-						<div class="bg-white rounded-xl shadow-soft border border-emerald-900/10 p-4">
-							<div class="flex items-center justify-between">
-								<p class="font-medium text-slate-900">Consumer</p>
-								<span class="text-xs text-slate-500">2025-09-15</span>
-							</div>
-							<p class="mt-1 text-sm text-slate-700">Scanned in store. SKU-AYUR-001</p>
-						</div>
-					</li>
-				</ol>
-
-				<!-- Map / Visual -->
-				<div class="bg-white rounded-xl shadow-soft border border-emerald-900/10 p-4">
-					<p class="text-sm font-medium text-slate-900 mb-2">Route Map</p>
-					<div class="aspect-[4/3] w-full rounded-lg border border-emerald-900/10 bg-gradient-to-br from-beige to-white grid place-items-center text-center">
-						<div class="text-slate-600">
-							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#2E7D32" class="w-6 h-6 mx-auto mb-1"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7zm0 9.5c-1.4 0-2.5-1.1-2.5-2.5S10.6 6.5 12 6.5s2.5 1.1 2.5 2.5S13.4 11.5 12 11.5z"/></svg>
-							<p class="text-sm">Kerala → Kochi → Packaging</p>
-							<p class="text-xs text-slate-500">Illustrative map placeholder</p>
-						</div>
-					</div>
-					<div class="mt-4 grid grid-cols-2 gap-3 text-xs">
-						<div class="rounded-md border border-emerald-900/10 p-3">
-							<p class="font-medium text-slate-900">Blockchain</p>
-							<p class="mt-1 text-slate-600">Tx: 0xabc...123 • 2025-09-12 10:22</p>
-						</div>
-						<div class="rounded-md border border-emerald-900/10 p-3">
-							<p class="font-medium text-slate-900">Compliance</p>
-							<p class="mt-1 text-slate-600">Organic certified • ISO 22000</p>
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
-	</main>
-
-	<!-- Fixed Bottom Navigation (mobile) -->
-	<nav class="md:hidden fixed bottom-0 inset-x-0 z-40 bg-white/95 backdrop-blur border-t border-emerald-900/10 safe-bottom">
-		<div class="grid grid-cols-5 gap-1 px-2 py-2 text-xs">
-			<button data-target="auth" class="bottom-tab inline-flex flex-col items-center justify-center gap-1 py-1.5 rounded-md hover:bg-beige/60">
-				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#2E7D32" class="w-5 h-5"><path d="M12 12a5 5 0 1 0-5-5 5 5 0 0 0 5 5zm0 2c-4 0-8 2-8 6v2h16v-2c0-4-4-6-8-6z"/></svg>
-				<span>Login</span>
-			</button>
-			<button data-target="farmer" class="bottom-tab inline-flex flex-col items-center justify-center gap-1 py-1.5 rounded-md hover:bg-beige/60">
-				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#2E7D32" class="w-5 h-5"><path d="M12 2C8 6 8 10 8 10s4 0 8-4 4-8 4-8-4 0-8 4zM4 14c4-4 8-4 8-4s0 4-4 8-8 4-8 4 0-4 4-8z"/></svg>
-				<span>Farmer</span>
-			</button>
-			<button data-target="collector" class="bottom-tab inline-flex flex-col items-center justify-center gap-1 py-1.5 rounded-md hover:bg-beige/60">
-				<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2E7D32" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M3 3h18M3 9h18M3 15h18M3 21h18"/></svg>
-				<span>Collector</span>
-			</button>
-			<button data-target="processor" class="bottom-tab inline-flex flex-col items-center justify-center gap-1 py-1.5 rounded-md hover:bg-beige/60">
-				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#2E7D32" class="w-5 h-5"><path d="M3 6h18v2H3zM3 11h18v2H3zM3 16h18v2H3z"/></svg>
-				<span>Processor</span>
-			</button>
-			<button data-target="trace" class="bottom-tab inline-flex flex-col items-center justify-center gap-1 py-1.5 rounded-md hover:bg-beige/60">
-				<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2E7D32" class="w-5 h-5"><path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M6 18L18 6"/></svg>
-				<span>Trace</span>
-			</button>
-		</div>
-	</nav>
-
-	<footer class="mt-10 border-t border-emerald-900/10">
-		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 text-xs text-slate-500 flex items-center justify-between">
-			<p>© 2025 VedaX</p>
-			<p class="inline-flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-primary"></span> Built for hackathons</p>
-		</div>
-	</footer>
-
-	<script>
-		// Section switching
-		const sections = Array.from(document.querySelectorAll('.section'));
-		function showSection(id){
-			sections.forEach(s => s.classList.remove('active'));
-			const el = document.getElementById(id);
-			if(el){ el.classList.add('active'); }
-			// update select
-			const mobile = document.getElementById('mobileNav');
-			if(mobile){ mobile.value = id; }
-			// update bottom tabs active state
-			updateBottomTabs(id);
-			// update hash (optional)
-			history.replaceState(null, '', '#' + id);
-		}
-
-		function updateBottomTabs(activeId){
-			document.querySelectorAll('.bottom-tab').forEach(btn => {
-				const isActive = btn.getAttribute('data-target') === activeId;
-				btn.classList.toggle('bg-beige/60', isActive);
-				btn.classList.toggle('text-primary', isActive);
-			});
-		}
-
-		// Navbar buttons and hero links
-		document.querySelectorAll('.nav-btn, .nav-link').forEach(btn => {
-			btn.addEventListener('click', (e) => {
-				e.preventDefault();
-				const id = btn.getAttribute('data-target') || btn.getAttribute('href')?.slice(1);
-				if(id) showSection(id);
-			});
-		});
-
-		// Bottom nav buttons
-		document.querySelectorAll('.bottom-tab').forEach(btn => {
-			btn.addEventListener('click', (e) => {
-				e.preventDefault();
-				const id = btn.getAttribute('data-target');
-				if(id) showSection(id);
-			});
-		});
-
-		// Mobile select
-		document.getElementById('mobileNav')?.addEventListener('change', (e) => showSection(e.target.value));
-
-		// Load section from hash on open
-		window.addEventListener('load', () => {
-			const initial = location.hash?.slice(1) || 'start';
-			showSection(initial);
-		});
-
-		// Auth tabs
-		document.querySelectorAll('.auth-tab').forEach(tab => {
-			tab.addEventListener('click', () => {
-				document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('bg-white','shadow-soft','border','border-emerald-900/10'));
-				tab.classList.add('bg-white','shadow-soft','border','border-emerald-900/10');
-				const isLogin = tab.getAttribute('data-auth-tab') === 'login';
-				document.getElementById('loginForm').classList.toggle('hidden', !isLogin);
-				document.getElementById('signupForm').classList.toggle('hidden', isLogin);
-			});
-		});
-
-		// Start screen: go to auth with chosen tab
-		document.querySelectorAll('.go-auth').forEach(btn => {
-			btn.addEventListener('click', () => {
-				const mode = btn.getAttribute('data-auth');
-				showSection('auth');
-				const loginTab = document.querySelector('[data-auth-tab="login"]');
-				const signupTab = document.querySelector('[data-auth-tab="signup"]');
-				if(mode === 'login' && loginTab){ loginTab.click(); }
-				if(mode === 'signup' && signupTab){ signupTab.click(); }
-			});
-		});
-
-		// Consumer: QR routing simulation
-		document.getElementById('btnOpenTrace')?.addEventListener('click', (e) => {
-			e.preventDefault();
-			const val = document.getElementById('qrInput').value.trim();
-			if(val){
-				document.getElementById('traceId').textContent = 'Trace ID: ' + val;
-				// demo: toggle verified if string contains 'X'
-				const verified = !val.toUpperCase().includes('X');
-				const badge = document.getElementById('verifyBadge');
-				badge.className = 'inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium ' + (verified ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-red-50 text-red-700 border border-red-200');
-				badge.innerHTML = verified
-					? '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#047857" class="w-3.5 h-3.5"><path d="M9 12l2 2 4-4 2 2-6 6-4-4 2-2z"/></svg> Verified on-chain'
-					: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#B91C1C" class="w-3.5 h-3.5"><path d="M6 6l12 12M6 18L18 6"/></svg> Not verified';
-				showSection('trace');
-			}
-		});
-
-		// Fake QR image upload handler
-		document.getElementById('qrFile')?.addEventListener('change', (e) => {
-			// In a real app, decode QR then navigate. Here we simulate.
-			document.getElementById('qrInput').value = 'TUL-2025-0912-01';
-			document.getElementById('btnOpenTrace').click();
-		});
-	</script>
+    <script src="script.js"></script>
 </body>
 </html>
+
+
