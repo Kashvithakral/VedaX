@@ -220,6 +220,24 @@ document.addEventListener('DOMContentLoaded', () => {
     const bundle = buildFhirBundle(id);
     downloadJson(`vedax-${id}.fhir.json`, bundle);
   });
+
+  // Simple auth
+  const auth = getAuth();
+  if (auth) {
+    redirectForRole(auth.role);
+  }
+
+  // Auth listeners
+  document.getElementById('login-form')?.addEventListener('submit', handleLogin);
+  document.getElementById('signup-form')?.addEventListener('submit', handleSignup);
+  attachLogout();
+
+  // Role guards
+  const path = location.pathname.split('/').pop() || '';
+  if (path === 'farmer.html') requireRole(['farmer','collector']);
+  if (path === 'collector.html') requireRole(['collector','farmer']);
+  if (path === 'processor.html') requireRole(['processor']);
+  // consumer accessible to all
 });
 
 
@@ -514,6 +532,63 @@ function downloadJson(filename, data) {
   const a = document.createElement('a');
   a.href = url; a.download = filename; a.click();
   URL.revokeObjectURL(url);
+}
+
+
+// Simple auth
+const AUTH_KEY = 'vedax.auth';
+function getAuth() { try { return JSON.parse(localStorage.getItem(AUTH_KEY) || '') || null; } catch { return null; } }
+function setAuth(auth) { if (auth) localStorage.setItem(AUTH_KEY, JSON.stringify(auth)); else localStorage.removeItem(AUTH_KEY); }
+function redirectForRole(role) {
+  if (role === 'farmer') location.href = 'farmer.html';
+  else if (role === 'collector') location.href = 'collector.html';
+  else if (role === 'processor') location.href = 'processor.html';
+  else location.href = 'consumer.html';
+}
+function requireRole(allowedRoles) {
+  const auth = getAuth();
+  if (!auth || (allowedRoles && !allowedRoles.includes(auth.role))) {
+    location.href = 'login.html';
+  }
+}
+
+function attachLogout() {
+  const nav = document.getElementById('nav-links');
+  if (!nav) return;
+  const auth = getAuth();
+  if (auth) {
+    const li = document.createElement('li');
+    const a = document.createElement('a');
+    a.href = '#'; a.textContent = 'Logout';
+    a.addEventListener('click', (e) => { e.preventDefault(); setAuth(null); location.href = 'index.html#cards'; });
+    li.appendChild(a);
+    nav.appendChild(li);
+  }
+}
+
+// Login/Signup handlers
+function handleLogin(e) {
+  e.preventDefault();
+  const email = document.getElementById('login-email')?.value?.trim();
+  const password = document.getElementById('login-password')?.value || '';
+  const role = document.getElementById('login-role')?.value;
+  const err = document.getElementById('login-error');
+  if (!email || !password || !role) { if (err) err.textContent = 'All fields are required.'; return; }
+  setAuth({ email, role, ts: Date.now() });
+  redirectForRole(role);
+}
+
+function handleSignup(e) {
+  e.preventDefault();
+  const name = document.getElementById('signup-name')?.value?.trim();
+  const email = document.getElementById('signup-email')?.value?.trim();
+  const password = document.getElementById('signup-password')?.value || '';
+  const role = document.getElementById('signup-role')?.value;
+  const err = document.getElementById('signup-error');
+  if (!name || !email || !password || !role) { if (err) err.textContent = 'All fields are required.'; return; }
+  // Simulate account creation
+  setAuth({ email, role, ts: Date.now(), name });
+  redirectForRole(role);
 }
 
 

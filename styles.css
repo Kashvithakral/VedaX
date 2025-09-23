@@ -173,4 +173,7 @@ input, select { min-height: 44px; }
   .dash-grid { grid-template-columns: repeat(3, 1fr); }
 }
 
+/* Auth pages */
+#login-form, #signup-form { background: var(--cream); padding: 16px; border-radius: 16px; box-shadow: var(--shadow); }
+
 
