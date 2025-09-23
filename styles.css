@@ -24,6 +24,24 @@ body {
   padding-top: var(--header-h-mobile);
 }
 
+/* Safe areas and touch targets */
+body { padding-bottom: max(env(safe-area-inset-bottom), 0); }
+.btn { min-height: 44px; }
+input, select { min-height: 44px; }
+
+/* Small-screen improvements */
+@media (max-width: 420px) {
+  .grid-2 { grid-template-columns: 1fr; }
+  .navbar { padding: 8px 8px; }
+  .brand-logo { height: 72px; }
+  .cards-grid { grid-template-columns: 1fr; }
+  .lookup { grid-template-columns: 1fr; }
+}
+
+@media (min-width: 600px) and (max-width: 899px) {
+  .dash-grid { grid-template-columns: 1fr 1fr; }
+}
+
 .visually-hidden {
   position: absolute !important;
   height: 1px; width: 1px;
