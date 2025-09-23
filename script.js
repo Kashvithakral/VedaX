@@ -200,6 +200,320 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Mobile nav
   document.querySelector('.nav-toggle')?.addEventListener('click', toggleMobileNav);
+
+  // Process offline queue at start
+  processQueue().then(() => {
+    renderHarvests();
+    renderCompliance();
+    renderBatchesAndLabs();
+  });
+
+  // Farmer form
+  document.getElementById('harvest-form')?.addEventListener('submit', handleHarvestSubmit);
+
+  // Processor form
+  document.getElementById('process-form')?.addEventListener('submit', handleProcessSubmit);
+
+  // FHIR download
+  document.getElementById('download-fhir')?.addEventListener('click', () => {
+    const id = (document.getElementById('batch-input')?.value || 'BATCH123').trim() || 'BATCH123';
+    const bundle = buildFhirBundle(id);
+    downloadJson(`vedax-${id}.fhir.json`, bundle);
+  });
 });
+
+
+// Data storage keys
+const LS_KEYS = {
+  harvests: 'vedax.harvests',
+  processes: 'vedax.processes',
+  labResults: 'vedax.labResults',
+  offlineQueue: 'vedax.offlineQueue'
+};
+
+function loadJson(key, fallback) {
+  try { return JSON.parse(localStorage.getItem(key) || '') ?? fallback; }
+  catch { return fallback; }
+}
+function saveJson(key, value) { localStorage.setItem(key, JSON.stringify(value)); }
+
+// IDs
+function generateId(prefix) {
+  const rand = Math.random().toString(36).slice(2, 8).toUpperCase();
+  const ts = Date.now().toString(36).toUpperCase();
+  return `${prefix}-${rand}-${ts}`;
+}
+
+// Compliance rules (demo)
+const GEOFENCE = { minLat: 20.0, maxLat: 35.5, minLng: 70.0, maxLng: 90.0 };
+const SEASONAL = {
+  // species: allowed months (1-12)
+  Ashwagandha: [4,5,6,10,11],
+  Tulsi: [3,4,5,6,7,8,9],
+  Amla: [11,12,1,2]
+};
+
+function checkGeofence(lat, lng) {
+  return lat >= GEOFENCE.minLat && lat <= GEOFENCE.maxLat && lng >= GEOFENCE.minLng && lng <= GEOFENCE.maxLng;
+}
+function checkSeason(species, date) {
+  const m = (date.getMonth() + 1);
+  const allowed = SEASONAL[species];
+  if (!allowed) return true; // unknown species allowed
+  return allowed.includes(m);
+}
+
+// Rendering
+function renderHarvests() {
+  const container = document.getElementById('harvest-list');
+  if (!container) return;
+  const items = loadJson(LS_KEYS.harvests, []);
+  container.innerHTML = '';
+  items.sort((a,b) => b.timestamp - a.timestamp).forEach((h) => {
+    const item = document.createElement('div');
+    item.className = 'list-item';
+    const meta = document.createElement('div');
+    meta.innerHTML = `<div><strong>${h.sampleId}</strong> — ${h.species} — ${h.quantityKg} kg</div>
+      <div class="list-meta">GPS: ${h.lat.toFixed(5)}, ${h.lng.toFixed(5)} · ${new Date(h.timestamp).toLocaleString()} ${h.synced ? '' : '(queued)'}</div>`;
+    const right = document.createElement('div');
+    if (h.photoDataUrl) {
+      const img = document.createElement('img');
+      img.className = 'thumb';
+      img.src = h.photoDataUrl;
+      img.alt = 'Photo';
+      right.appendChild(img);
+    }
+    item.appendChild(meta);
+    item.appendChild(right);
+    container.appendChild(item);
+  });
+}
+
+function renderCompliance() {
+  const container = document.getElementById('compliance-badges');
+  if (!container) return;
+  const items = loadJson(LS_KEYS.harvests, []);
+  if (items.length === 0) {
+    container.innerHTML = '<span class="badge warn">No harvests yet</span>';
+    return;
+  }
+  const last = items.slice().sort((a,b)=>b.timestamp-a.timestamp)[0];
+  const geoOk = checkGeofence(last.lat, last.lng);
+  const seasonOk = checkSeason(last.species, new Date(last.timestamp));
+  container.innerHTML = '';
+  const geo = document.createElement('span');
+  geo.className = `badge ${geoOk ? 'ok' : 'fail'}`;
+  geo.textContent = geoOk ? 'Geo-fence PASS' : 'Geo-fence FAIL';
+  const sea = document.createElement('span');
+  sea.className = `badge ${seasonOk ? 'ok' : 'warn'}`;
+  sea.textContent = seasonOk ? 'Seasonal OK' : 'Out-of-season';
+  container.append(geo, sea);
+}
+
+function renderBatchesAndLabs() {
+  const batchList = document.getElementById('batch-list');
+  const labList = document.getElementById('lab-results');
+  if (!batchList && !labList) return;
+  const processes = loadJson(LS_KEYS.processes, []);
+  const harvests = loadJson(LS_KEYS.harvests, []);
+
+  // group by batchId
+  const byBatch = processes.reduce((acc, p) => {
+    acc[p.batchId] = acc[p.batchId] || [];
+    acc[p.batchId].push(p);
+    return acc;
+  }, {});
+
+  if (batchList) {
+    batchList.innerHTML = '';
+    Object.keys(byBatch).sort().forEach((batchId) => {
+      const steps = byBatch[batchId];
+      const li = document.createElement('div');
+      li.className = 'list-item';
+      const allCollectionIds = harvests.map(h=>h.sampleId); // demo linkage
+      li.innerHTML = `<div><strong>${batchId}</strong><div class="list-meta">Collections: ${allCollectionIds.join(', ') || '—'}</div></div><div>${steps.length} steps</div>`;
+      batchList.appendChild(li);
+    });
+  }
+
+  if (labList) {
+    labList.innerHTML = '';
+    const labResults = loadJson(LS_KEYS.labResults, []);
+    const knownBatches = Object.keys(byBatch);
+    knownBatches.forEach((batchId) => {
+      const lr = labResults.find(x => x.batchId === batchId) || simulateLabFor(batchId);
+      const row = document.createElement('div');
+      row.className = 'list-item';
+      const badgeClass = lr.status === 'PASS' ? 'ok' : (lr.status === 'PENDING' ? 'warn' : 'fail');
+      row.innerHTML = `<div><strong>${batchId}</strong><div class="list-meta">${lr.panel} · ${new Date(lr.timestamp).toLocaleDateString()}</div></div><div class="badge ${badgeClass}">${lr.status}</div>`;
+      labList.appendChild(row);
+    });
+  }
+}
+
+function simulateLabFor(batchId) {
+  const status = batchId.toUpperCase() === 'BATCH123' ? 'PASS' : 'PENDING';
+  return { batchId, panel: 'HeavyMetals+Microbial', status, timestamp: Date.now() };
+}
+
+// Offline queue
+function enqueueOffline(item) {
+  const q = loadJson(LS_KEYS.offlineQueue, []);
+  q.push(item);
+  saveJson(LS_KEYS.offlineQueue, q);
+}
+
+async function processQueue() {
+  const q = loadJson(LS_KEYS.offlineQueue, []);
+  if (!q.length) return;
+  const remaining = [];
+  for (const item of q) {
+    try {
+      // simulate network commit
+      await new Promise(res => setTimeout(res, 300));
+      if (item.type === 'harvest') {
+        const list = loadJson(LS_KEYS.harvests, []);
+        const idx = list.findIndex(h => h.sampleId === item.payload.sampleId);
+        if (idx >= 0) list[idx].synced = true; else list.push({ ...item.payload, synced: true });
+        saveJson(LS_KEYS.harvests, list);
+      } else if (item.type === 'process') {
+        const list = loadJson(LS_KEYS.processes, []);
+        list.push(item.payload);
+        saveJson(LS_KEYS.processes, list);
+      }
+    } catch (e) {
+      remaining.push(item);
+    }
+  }
+  saveJson(LS_KEYS.offlineQueue, remaining);
+}
+
+window.addEventListener('online', () => { processQueue().then(() => { renderHarvests(); renderCompliance(); renderBatchesAndLabs(); }); });
+
+// Handlers
+function handleHarvestSubmit(e) {
+  e.preventDefault();
+  const species = document.getElementById('harvest-species')?.value?.trim() || '';
+  const quantityKg = parseFloat(document.getElementById('harvest-qty')?.value || '0');
+  const lat = parseFloat(document.getElementById('harvest-lat')?.value || '0');
+  const lng = parseFloat(document.getElementById('harvest-lng')?.value || '0');
+  const fileInput = document.getElementById('harvest-photo');
+  const sampleId = generateId('SAMPLE');
+  const timestamp = Date.now();
+
+  const record = { sampleId, species, quantityKg, lat, lng, timestamp, photoDataUrl: null, synced: navigator.onLine };
+
+  function finalizeSave() {
+    const list = loadJson(LS_KEYS.harvests, []);
+    list.push(record);
+    saveJson(LS_KEYS.harvests, list);
+    if (!navigator.onLine) enqueueOffline({ type: 'harvest', payload: record });
+    renderHarvests();
+    renderCompliance();
+    const status = document.getElementById('harvest-status');
+    if (status) {
+      const ok1 = checkGeofence(lat, lng);
+      const ok2 = checkSeason(species, new Date(timestamp));
+      status.innerHTML = '';
+      const b1 = document.createElement('span'); b1.className = `badge ${ok1 ? 'ok' : 'fail'}`; b1.textContent = ok1 ? 'Geo-fence PASS' : 'Geo-fence FAIL';
+      const b2 = document.createElement('span'); b2.className = `badge ${ok2 ? 'ok' : 'warn'}`; b2.textContent = ok2 ? 'Seasonal OK' : 'Out-of-season';
+      status.append(b1, b2);
+    }
+    e.target.reset();
+  }
+
+  const file = fileInput && fileInput.files && fileInput.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = () => { record.photoDataUrl = reader.result; finalizeSave(); };
+    reader.onerror = () => { finalizeSave(); };
+    reader.readAsDataURL(file);
+  } else {
+    finalizeSave();
+  }
+}
+
+function handleProcessSubmit(e) {
+  e.preventDefault();
+  const batchIdRaw = document.getElementById('process-batch-id')?.value || '';
+  const batchId = batchIdRaw.trim() || generateId('BATCH');
+  const step = document.getElementById('process-step')?.value || 'drying';
+  const notes = document.getElementById('process-notes')?.value?.trim() || '';
+  const timestamp = Date.now();
+  const entry = { id: generateId('STEP'), batchId, step, notes, timestamp, synced: navigator.onLine };
+  if (navigator.onLine) {
+    const list = loadJson(LS_KEYS.processes, []);
+    list.push(entry);
+    saveJson(LS_KEYS.processes, list);
+  } else {
+    enqueueOffline({ type: 'process', payload: entry });
+  }
+  renderBatchesAndLabs();
+  e.target.reset();
+}
+
+// FHIR Bundle (simplified demo)
+function buildFhirBundle(batchId) {
+  const harvests = loadJson(LS_KEYS.harvests, []);
+  const processes = loadJson(LS_KEYS.processes, []).filter(p => p.batchId.toUpperCase() === batchId.toUpperCase());
+  const lab = simulateLabFor(batchId);
+
+  const bundle = {
+    resourceType: 'Bundle',
+    type: 'collection',
+    timestamp: new Date().toISOString(),
+    entry: []
+  };
+
+  harvests.forEach(h => {
+    bundle.entry.push({
+      resource: {
+        resourceType: 'Observation',
+        id: h.sampleId,
+        status: 'final',
+        code: { text: 'Herb collection event' },
+        effectiveDateTime: new Date(h.timestamp).toISOString(),
+        valueString: `${h.species} - ${h.quantityKg} kg`,
+        component: [
+          { code: { text: 'latitude' }, valueDecimal: h.lat },
+          { code: { text: 'longitude' }, valueDecimal: h.lng }
+        ]
+      }
+    });
+  });
+
+  processes.forEach(p => {
+    bundle.entry.push({
+      resource: {
+        resourceType: 'Procedure',
+        id: p.id,
+        status: 'completed',
+        code: { text: `Processing: ${p.step}` },
+        performedDateTime: new Date(p.timestamp).toISOString(),
+        note: [{ text: p.notes }]
+      }
+    });
+  });
+
+  bundle.entry.push({
+    resource: {
+      resourceType: 'DiagnosticReport',
+      id: `LAB-${batchId}`,
+      status: lab.status === 'PASS' ? 'final' : 'registered',
+      code: { text: lab.panel },
+      conclusion: lab.status
+    }
+  });
+
+  return bundle;
+}
+
+function downloadJson(filename, data) {
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = filename; a.click();
+  URL.revokeObjectURL(url);
+}
 
 

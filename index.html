@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, i
+    nitial-scale=1.0">
     <title>VedaX —From Soil To Soul</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -54,22 +55,22 @@
         <section id="cards" class="cards-section" aria-labelledby="cards-title">
             <h2 id="cards-title" data-i18n="cards.title">Get Started</h2>
             <div class="cards-grid">
-                <a class="card" href="#" role="button" aria-label="For Farmers">
+                <a class="card" href="farmer.html" role="button" aria-label="For Farmers">
                     <div class="card-icon"><i class="fa-solid fa-seedling" aria-hidden="true"></i></div>
                     <h3 data-i18n="cards.farmers.title">For Farmers</h3>
                     <p data-i18n="cards.farmers.desc">Record harvest, add GPS and photos</p>
                 </a>
-                <a class="card" href="#" role="button" aria-label="For Processors">
+                <a class="card" href="collector.html" role="button" aria-label="For Collectors">
+                    <div class="card-icon"><i class="fa-solid fa-leaf" aria-hidden="true"></i></div>
+                    <h3>For Collectors</h3>
+                    <p>Record wild collection with GPS and photo</p>
+                </a>
+                <a class="card" href="processor.html" role="button" aria-label="For Processors">
                     <div class="card-icon"><i class="fa-solid fa-industry" aria-hidden="true"></i></div>
                     <h3 data-i18n="cards.processors.title">For Processors</h3>
                     <p data-i18n="cards.processors.desc">Log drying, grinding, packaging</p>
                 </a>
-                <a class="card" href="#" role="button" aria-label="For Labs">
-                    <div class="card-icon"><i class="fa-solid fa-flask" aria-hidden="true"></i></div>
-                    <h3 data-i18n="cards.labs.title">For Labs</h3>
-                    <p data-i18n="cards.labs.desc">Upload test results</p>
-                </a>
-                <a class="card" href="#consumer" role="button" aria-label="For Consumers">
+                <a class="card" href="consumer.html" role="button" aria-label="For Consumers">
                     <div class="card-icon"><i class="fa-solid fa-store" aria-hidden="true"></i></div>
                     <h3 data-i18n="cards.consumers.title">For Consumers</h3>
                     <p data-i18n="cards.consumers.desc">Scan QR, see provenance story</p>
@@ -107,20 +108,6 @@
             </div>
         </section>
 
-        <section id="consumer" class="consumer-section" aria-labelledby="consumer-title">
-            <h2 id="consumer-title" data-i18n="consumer.title">Consumer QR / Batch Lookup</h2>
-            <div class="lookup">
-                <label class="visually-hidden" for="batch-input" data-i18n="consumer.inputLabel">Enter Batch ID</label>
-                <input id="batch-input" type="text" inputmode="text" autocomplete="off" placeholder="e.g. BATCH123" aria-describedby="batch-help">
-                <button id="provenance-button" class="btn btn-secondary">
-                    <i class="fa-solid fa-map-location-dot" aria-hidden="true"></i>
-                    <span data-i18n="consumer.button">View Provenance</span>
-                </button>
-                <div id="batch-help" class="help-text" data-i18n="consumer.help">Tip: Try BATCH123 for a demo.</div>
-            </div>
-            <div id="provenance" class="provenance" aria-live="polite"></div>
-        </section>
-
         <section id="support" class="support-section" aria-labelledby="support-title">
             <h2 id="support-title" data-i18n="support.title">Support & FAQs</h2>
             <div class="faqs">
@@ -147,7 +134,7 @@
 
     <footer class="site-footer" aria-label="Footer">
         <div class="footer-inner">
-            <span>© <span id="year"></span> <span data-i18n="brand">VedaX Trace</span></span>
+            <span>© <span id="year"></span> <span data-i18n="brand">VedaX </span></span>
             <span class="footer-motif" aria-hidden="true">🌱</span>
         </div>
     </footer>

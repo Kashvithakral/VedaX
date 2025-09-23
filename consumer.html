@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VedaX — Consumer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="site-header">
+        <nav class="navbar" aria-label="Main Navigation">
+            <div class="brand">
+                <img src="assets/VedaX_logo-removebg-preview.png" alt="VedaX logo" class="brand-logo">
+                <span class="brand-name">VedaX</span>
+            </div>
+            <ul id="nav-links" class="nav-links">
+                <li><a href="index.html#cards">Home</a></li>
+                <li><a href="farmer.html">Farmer</a></li>
+                <li><a href="collector.html">Collector</a></li>
+                <li><a href="processor.html">Processor</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="consumer-section" aria-labelledby="consumer-title">
+            <h2 id="consumer-title">Consumer QR / Batch Lookup</h2>
+            <div class="lookup">
+                <label class="visually-hidden" for="batch-input">Enter Batch ID</label>
+                <input id="batch-input" type="text" inputmode="text" autocomplete="off" placeholder="e.g. BATCH123">
+                <button id="provenance-button" class="btn btn-secondary">
+                    <i class="fa-solid fa-map-location-dot" aria-hidden="true"></i>
+                    <span>View Provenance</span>
+                </button>
+                <button id="download-fhir" class="btn btn-primary" aria-label="Download FHIR JSON">Download FHIR</button>
+                <div id="batch-help" class="help-text">Tip: Try BATCH123 for a demo.</div>
+            </div>
+            <div id="provenance" class="provenance" aria-live="polite"></div>
+        </section>
+    </main>
+
+    <footer class="site-footer" aria-label="Footer">
+        <div class="footer-inner">
+            <span>© <span id="year"></span> VedaX Trace</span>
+            <span class="footer-motif" aria-hidden="true">🌱</span>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
