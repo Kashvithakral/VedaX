@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VedaX —From Soil To Soul</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-6K0Tn2gW9iGm9l2bF9s4uYVgK6s7x4b3u7A3f3n0VbQ2FZBtT2m8xJxCwqfG7m3i2bUqf3+v+zj5Vg8m0Jwq6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="site-header">
+        <nav class="navbar" aria-label="Main Navigation">
+            <div class="brand">
+                <img src="assets/VedaX_logo-removebg-preview.png" alt="VedaX logo" class="brand-logo">
+                <span class="brand-name" data-i18n="brand">VedaX</span>
+            </div>
+            <button class="nav-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Toggle navigation">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+            <ul id="nav-links" class="nav-links">
+                <li><a href="#home" data-i18n="nav.home">Home</a></li>
+                <li><a href="#cards" data-i18n="nav.sections">Sections</a></li>
+                <li><a href="#about" data-i18n="nav.about">About</a></li>
+                <li><a href="#support" data-i18n="nav.support">Support</a></li>
+            </ul>
+            <div class="lang-switcher">
+                <label class="visually-hidden" for="language-select" data-i18n="aria.language">Language</label>
+                <select id="language-select" aria-label="Language selector">
+                    <option value="en">English</option>
+                    <option value="hi">हिन्दी</option>
+                </select>
+            </div>
+        </nav>
+    </header>
+
+    <section id="home" class="hero" role="banner" aria-label="Hero">
+        <div class="hero-content">
+            <h1 data-i18n="hero.title">Ayurvedic Herb Traceability</h1>
+            <p class="hero-sub" data-i18n="hero.subtitle">Trust every step: farm to formulation</p>
+            <div class="hero-cta">
+                <input id="batch-input-hero" type="text" inputmode="text" autocomplete="off" placeholder="e.g. BATCH123" aria-label="Batch ID">
+                <button id="cta-button" class="btn btn-primary">
+                    <i class="fa-solid fa-qrcode" aria-hidden="true"></i>
+                    <span data-i18n="hero.cta">Scan QR / Search Batch</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <main>
+        <section id="cards" class="cards-section" aria-labelledby="cards-title">
+            <h2 id="cards-title" data-i18n="cards.title">Get Started</h2>
+            <div class="cards-grid">
+                <a class="card" href="#" role="button" aria-label="For Farmers">
+                    <div class="card-icon"><i class="fa-solid fa-seedling" aria-hidden="true"></i></div>
+                    <h3 data-i18n="cards.farmers.title">For Farmers</h3>
+                    <p data-i18n="cards.farmers.desc">Record harvest, add GPS and photos</p>
+                </a>
+                <a class="card" href="#" role="button" aria-label="For Processors">
+                    <div class="card-icon"><i class="fa-solid fa-industry" aria-hidden="true"></i></div>
+                    <h3 data-i18n="cards.processors.title">For Processors</h3>
+                    <p data-i18n="cards.processors.desc">Log drying, grinding, packaging</p>
+                </a>
+                <a class="card" href="#" role="button" aria-label="For Labs">
+                    <div class="card-icon"><i class="fa-solid fa-flask" aria-hidden="true"></i></div>
+                    <h3 data-i18n="cards.labs.title">For Labs</h3>
+                    <p data-i18n="cards.labs.desc">Upload test results</p>
+                </a>
+                <a class="card" href="#consumer" role="button" aria-label="For Consumers">
+                    <div class="card-icon"><i class="fa-solid fa-store" aria-hidden="true"></i></div>
+                    <h3 data-i18n="cards.consumers.title">For Consumers</h3>
+                    <p data-i18n="cards.consumers.desc">Scan QR, see provenance story</p>
+                </a>
+            </div>
+        </section>
+
+        <section id="about" class="about-section" aria-labelledby="about-title">
+            <h2 id="about-title" data-i18n="about.title">How Traceability Works</h2>
+            <div class="flow">
+                <div class="flow-step" aria-label="Harvest">
+                    <i class="fa-solid fa-leaf" aria-hidden="true"></i>
+                    <span data-i18n="about.harvest">Harvest</span>
+                </div>
+                <div class="flow-arrow" aria-hidden="true">→</div>
+                <div class="flow-step" aria-label="Lab">
+                    <i class="fa-solid fa-flask" aria-hidden="true"></i>
+                    <span data-i18n="about.lab">Lab</span>
+                </div>
+                <div class="flow-arrow" aria-hidden="true">→</div>
+                <div class="flow-step" aria-label="Processing">
+                    <i class="fa-solid fa-industry" aria-hidden="true"></i>
+                    <span data-i18n="about.process">Processing</span>
+                </div>
+                <div class="flow-arrow" aria-hidden="true">→</div>
+                <div class="flow-step" aria-label="Shop">
+                    <i class="fa-solid fa-shop" aria-hidden="true"></i>
+                    <span data-i18n="about.shop">Shop</span>
+                </div>
+                <div class="flow-arrow" aria-hidden="true">→</div>
+                <div class="flow-step" aria-label="Consumer">
+                    <i class="fa-solid fa-user" aria-hidden="true"></i>
+                    <span data-i18n="about.consumer">Consumer</span>
+                </div>
+            </div>
+        </section>
+
+        <section id="consumer" class="consumer-section" aria-labelledby="consumer-title">
+            <h2 id="consumer-title" data-i18n="consumer.title">Consumer QR / Batch Lookup</h2>
+            <div class="lookup">
+                <label class="visually-hidden" for="batch-input" data-i18n="consumer.inputLabel">Enter Batch ID</label>
+                <input id="batch-input" type="text" inputmode="text" autocomplete="off" placeholder="e.g. BATCH123" aria-describedby="batch-help">
+                <button id="provenance-button" class="btn btn-secondary">
+                    <i class="fa-solid fa-map-location-dot" aria-hidden="true"></i>
+                    <span data-i18n="consumer.button">View Provenance</span>
+                </button>
+                <div id="batch-help" class="help-text" data-i18n="consumer.help">Tip: Try BATCH123 for a demo.</div>
+            </div>
+            <div id="provenance" class="provenance" aria-live="polite"></div>
+        </section>
+
+        <section id="support" class="support-section" aria-labelledby="support-title">
+            <h2 id="support-title" data-i18n="support.title">Support & FAQs</h2>
+            <div class="faqs">
+                <details>
+                    <summary data-i18n="faq.q1">What is traceability?</summary>
+                    <p data-i18n="faq.a1">Traceability links every batch from farm to consumer.</p>
+                </details>
+                <details>
+                    <summary data-i18n="faq.q2">How do I add harvest data?</summary>
+                    <p data-i18n="faq.a2">Farmers can record harvest with photos and GPS.</p>
+                </details>
+                <details>
+                    <summary data-i18n="faq.q3">Are lab results verified?</summary>
+                    <p data-i18n="faq.a3">Yes, labs upload certificates for each batch.</p>
+                </details>
+            </div>
+            <div class="contact">
+                <h3 data-i18n="support.contact">Contact</h3>
+                <p><i class="fa-solid fa-envelope"></i> support@vedax.example</p>
+                <p><i class="fa-solid fa-phone"></i> +91 99999 99999</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer" aria-label="Footer">
+        <div class="footer-inner">
+            <span>© <span id="year"></span> <span data-i18n="brand">VedaX Trace</span></span>
+            <span class="footer-motif" aria-hidden="true">🌱</span>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
+
