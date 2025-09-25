@@ -1,0 +1,49 @@
+{
+  "name": "vedax-network",
+  "version": "1.0.0",
+  "client": {
+    "organization": "VedaXMSP",
+    "connection": {
+      "timeout": {
+        "peer": {
+          "endorser": "300"
+        }
+      }
+    }
+  },
+  "organizations": {
+    "VedaXMSP": {
+      "mspid": "VedaXMSP",
+      "peers": [
+        "peer0.vedax.example.com"
+      ],
+      "certificateAuthorities": [
+        "ca.vedax.example.com"
+      ]
+    }
+  },
+  "peers": {
+    "peer0.vedax.example.com": {
+      "url": "grpcs://localhost:7051",
+      "tlsCACerts": {
+        "pem": "-----BEGIN CERTIFICATE-----\n...certificate content...\n-----END CERTIFICATE-----\n"
+      },
+      "grpcOptions": {
+        "ssl-target-name-override": "peer0.vedax.example.com",
+        "hostnameOverride": "peer0.vedax.example.com"
+      }
+    }
+  },
+  "certificateAuthorities": {
+    "ca.vedax.example.com": {
+      "url": "https://localhost:7054",
+      "caName": "ca-vedax",
+      "tlsCACerts": {
+        "pem": "-----BEGIN CERTIFICATE-----\n...certificate content...\n-----END CERTIFICATE-----\n"
+      },
+      "httpOptions": {
+        "verify": false
+      }
+    }
+  }
+}
