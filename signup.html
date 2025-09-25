@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VedaX — Sign Up</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -10,56 +10,214 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="auth-page">
     <header class="site-header">
         <nav class="navbar" aria-label="Main Navigation">
             <div class="brand">
                 <img src="assets/VedaX_logo-removebg-preview.png" alt="VedaX logo" class="brand-logo">
                 <span class="brand-name">VedaX</span>
             </div>
-            <ul id="nav-links" class="nav-links">
-                <li><a href="index.html#cards">Home</a></li>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
                 <li><a href="login.html">Login</a></li>
             </ul>
         </nav>
     </header>
 
-    <main>
-        <section class="dashboard-section" aria-labelledby="signup-title">
-            <h2 id="signup-title">Create your account</h2>
-            <form id="signup-form" class="form-grid" style="max-width: 520px; margin: 0 auto;">
-                <label>Full Name
-                    <input type="text" id="signup-name" required placeholder="Your Name">
-                </label>
-                <label>Email
-                    <input type="email" id="signup-email" required placeholder="you@example.com" autocomplete="username">
-                </label>
-                <label>Password
-                    <input type="password" id="signup-password" required autocomplete="new-password">
-                </label>
-                <label>Role
-                    <select id="signup-role" required>
-                        <option value="farmer">Farmer</option>
-                        <option value="collector">Collector</option>
-                        <option value="processor">Processor</option>
-                        <option value="consumer">Consumer</option>
-                    </select>
-                </label>
-                <div class="actions">
-                    <button type="submit" class="btn btn-secondary">Sign Up</button>
+    <main class="auth-main">
+        <div class="auth-container">
+            <div class="auth-card">
+                <div class="auth-header">
+                    <h1>Join VedaX</h1>
+                    <p>Create your account to start tracking herbal supply chains</p>
                 </div>
-                <div id="signup-error" class="help-text" style="color:#8a1c1c"></div>
-            </form>
-        </section>
+
+                <form id="signup-form" class="auth-form">
+                    <div class="form-group">
+                        <label for="signup-name">
+                            <i class="fa-solid fa-user"></i>
+                            Full Name
+                        </label>
+                        <input 
+                            type="text" 
+                            id="signup-name" 
+                            name="name" 
+                            required 
+                            placeholder="Enter your full name"
+                            autocomplete="name"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="signup-email">
+                            <i class="fa-solid fa-envelope"></i>
+                            Email Address
+                        </label>
+                        <input 
+                            type="email" 
+                            id="signup-email" 
+                            name="email" 
+                            required 
+                            placeholder="Enter your email"
+                            autocomplete="email"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="signup-password">
+                            <i class="fa-solid fa-lock"></i>
+                            Password
+                        </label>
+                        <input 
+                            type="password" 
+                            id="signup-password" 
+                            name="password" 
+                            required 
+                            placeholder="Create a password (min 6 characters)"
+                            autocomplete="new-password"
+                            minlength="6"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="signup-role">
+                            <i class="fa-solid fa-briefcase"></i>
+                            Your Role
+                        </label>
+                        <select id="signup-role" name="role" required>
+                            <option value="">Select your role</option>
+                            <option value="farmer">Farmer</option>
+                            <option value="collector">Collector</option>
+                            <option value="processor">Processor</option>
+                            <option value="lab">Laboratory</option>
+                            <option value="manufacturer">Manufacturer</option>
+                            <option value="consumer">Consumer</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="signup-phone">
+                            <i class="fa-solid fa-phone"></i>
+                            Phone Number (Optional)
+                        </label>
+                        <input 
+                            type="tel" 
+                            id="signup-phone" 
+                            name="phone" 
+                            placeholder="Enter your phone number"
+                            autocomplete="tel"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="signup-organization">
+                            <i class="fa-solid fa-building"></i>
+                            Organization (Optional)
+                        </label>
+                        <input 
+                            type="text" 
+                            id="signup-organization" 
+                            name="organization" 
+                            placeholder="Your company or cooperative name"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="terms" required>
+                            <span class="checkmark"></span>
+                            I agree to the <a href="#" target="_blank">Terms of Service</a> and <a href="#" target="_blank">Privacy Policy</a>
+                        </label>
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary btn-full">
+                            <i class="fa-solid fa-user-plus"></i>
+                            Create Account
+                        </button>
+                    </div>
+
+                    <div id="signup-error" class="error-message" style="display: none;"></div>
+                </form>
+
+                <div class="auth-footer">
+                    <p>Already have an account? <a href="login.html">Sign in here</a></p>
+                </div>
+            </div>
+        </div>
     </main>
 
-    <footer class="site-footer" aria-label="Footer">
-        <div class="footer-inner">
-            <span>© <span id="year"></span> VedaX</span>
-            <span class="footer-motif" aria-hidden="true">🌱</span>
-        </div>
-    </footer>
+    <!-- Connection Status Indicator -->
+    <div id="connection-status" class="connection-status online">Online</div>
+    
+    <!-- API Client -->
+    <script src="api.js"></script>
+    <!-- Safe Script (prevents refresh loops) -->
+    <script src="script-safe.js"></script>
+    
+    <!-- Page-specific script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Auto-redirect if already logged in
+            if (vedaxAPI.isAuthenticated()) {
+                const user = vedaxAPI.getCurrentUser();
+                if (user) {
+                    redirectForRole(user.role);
+                }
+            }
 
-    <script src="script.js"></script>
+            // Enhanced signup form handling
+            const signupForm = document.getElementById('signup-form');
+            signupForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                const submitBtn = signupForm.querySelector('button[type="submit"]');
+                const errorEl = document.getElementById('signup-error');
+                
+                utils.showLoading(submitBtn);
+                errorEl.style.display = 'none';
+
+                try {
+                    const formData = new FormData(signupForm);
+                    const userData = {
+                        name: formData.get('name')?.trim(),
+                        email: formData.get('email')?.trim(),
+                        password: formData.get('password'),
+                        role: formData.get('role'),
+                        profile: {}
+                    };
+
+                    // Add optional fields
+                    if (formData.get('phone')) {
+                        userData.profile.phone = formData.get('phone').trim();
+                    }
+
+                    if (formData.get('organization')) {
+                        userData.profile.organization = {
+                            name: formData.get('organization').trim(),
+                            type: 'company'
+                        };
+                    }
+
+                    const result = await vedaxAPI.register(userData);
+                    
+                    // Show success message
+                    utils.showNotification('Account created successfully! Welcome to VedaX!', 'success');
+                    
+                    // Redirect based on role
+                    setTimeout(() => {
+                        redirectForRole(result.user.role);
+                    }, 1500);
+                    
+                } catch (error) {
+                    console.error('Signup failed:', error);
+                    errorEl.textContent = error.message || 'Registration failed. Please try again.';
+                    errorEl.style.display = 'block';
+                } finally {
+                    utils.showLoading(submitBtn, false);
+                }
+            });
+        });
+    </script>
 </body>
 </html>

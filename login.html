@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VedaX — Login</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -10,53 +10,145 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="auth-page">
     <header class="site-header">
         <nav class="navbar" aria-label="Main Navigation">
             <div class="brand">
                 <img src="assets/VedaX_logo-removebg-preview.png" alt="VedaX logo" class="brand-logo">
                 <span class="brand-name">VedaX</span>
             </div>
-            <ul id="nav-links" class="nav-links">
-                <li><a href="index.html#cards">Home</a></li>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
                 <li><a href="signup.html">Sign Up</a></li>
             </ul>
         </nav>
     </header>
 
-    <main>
-        <section class="dashboard-section" aria-labelledby="login-title">
-            <h2 id="login-title">Login</h2>
-            <form id="login-form" class="form-grid" style="max-width: 520px; margin: 0 auto;">
-                <label>Email
-                    <input type="email" id="login-email" required placeholder="you@example.com" autocomplete="username">
-                </label>
-                <label>Password
-                    <input type="password" id="login-password" required autocomplete="current-password">
-                </label>
-                <label>Role
-                    <select id="login-role" required>
-                        <option value="farmer">Farmer</option>
-                        <option value="collector">Collector</option>
-                        <option value="processor">Processor</option>
-                        <option value="consumer">Consumer</option>
-                    </select>
-                </label>
-                <div class="actions">
-                    <button type="submit" class="btn btn-secondary">Login</button>
+    <main class="auth-main">
+        <div class="auth-container">
+            <div class="auth-card">
+                <div class="auth-header">
+                    <h1>Welcome Back</h1>
+                    <p>Sign in to your VedaX account</p>
                 </div>
-                <div id="login-error" class="help-text" style="color:#8a1c1c"></div>
-            </form>
-        </section>
+
+                <form id="login-form" class="auth-form">
+                    <div class="form-group">
+                        <label for="login-email">
+                            <i class="fa-solid fa-envelope"></i>
+                            Email Address
+                        </label>
+                        <input 
+                            type="email" 
+                            id="login-email" 
+                            name="email" 
+                            required 
+                            placeholder="Enter your email"
+                            autocomplete="email"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="login-password">
+                            <i class="fa-solid fa-lock"></i>
+                            Password
+                        </label>
+                        <input 
+                            type="password" 
+                            id="login-password" 
+                            name="password" 
+                            required 
+                            placeholder="Enter your password"
+                            autocomplete="current-password"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <div class="form-options">
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="remember">
+                                <span class="checkmark"></span>
+                                Remember me
+                            </label>
+                            <a href="#" class="forgot-link">Forgot password?</a>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary btn-full">
+                            <i class="fa-solid fa-sign-in-alt"></i>
+                            Sign In
+                        </button>
+                    </div>
+
+                    <div id="login-error" class="error-message" style="display: none;"></div>
+                </form>
+
+                <div class="auth-divider">
+                    <span>or</span>
+                </div>
+
+                <div class="demo-accounts">
+                    <h3>Demo Accounts</h3>
+                    <p>Try VedaX with these demo accounts:</p>
+                    
+                    <div class="demo-grid">
+                        <button class="demo-btn" data-email="farmer@vedax.example" data-password="farmer123">
+                            <i class="fa-solid fa-seedling"></i>
+                            <span>Farmer Demo</span>
+                        </button>
+                        <button class="demo-btn" data-email="processor@vedax.example" data-password="processor123">
+                            <i class="fa-solid fa-industry"></i>
+                            <span>Processor Demo</span>
+                        </button>
+                        <button class="demo-btn" data-email="lab@vedax.example" data-password="lab123">
+                            <i class="fa-solid fa-flask"></i>
+                            <span>Lab Demo</span>
+                        </button>
+                        <button class="demo-btn" data-email="admin@vedax.example" data-password="admin123">
+                            <i class="fa-solid fa-user-shield"></i>
+                            <span>Admin Demo</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="auth-footer">
+                    <p>Don't have an account? <a href="signup.html">Sign up here</a></p>
+                </div>
+            </div>
+        </div>
     </main>
 
-    <footer class="site-footer" aria-label="Footer">
-        <div class="footer-inner">
-            <span>© <span id="year"></span> VedaX</span>
-            <span class="footer-motif" aria-hidden="true">🌱</span>
-        </div>
-    </footer>
+    <!-- Connection Status Indicator -->
+    <div id="connection-status" class="connection-status online">Online</div>
+    
+    <!-- API Client -->
+    <script src="api.js"></script>
+    <!-- Safe Script (prevents refresh loops) -->
+    <script src="script-safe.js"></script>
+    
+    <!-- Page-specific script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Demo account buttons
+            document.querySelectorAll('.demo-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const email = btn.dataset.email;
+                    const password = btn.dataset.password;
+                    
+                    document.getElementById('login-email').value = email;
+                    document.getElementById('login-password').value = password;
+                });
+            });
 
-    <script src="script.js"></script>
+            // Auto-redirect if already logged in
+            if (vedaxAPI.isAuthenticated()) {
+                const user = vedaxAPI.getCurrentUser();
+                if (user) {
+                    redirectForRole(user.role);
+                }
+            }
+        });
+    </script>
 </body>
 </html>

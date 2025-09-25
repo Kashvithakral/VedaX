@@ -37,24 +37,66 @@
                     <h3>New Harvest</h3>
                     <form id="harvest-form" class="form-grid">
                         <label>Species
-                            <input type="text" id="harvest-species" required placeholder="e.g. Ashwagandha">
+                            <input type="text" name="species" required placeholder="e.g. Ashwagandha">
+                            <datalist id="species-list">
+                                <option value="Ashwagandha">
+                                <option value="Tulsi">
+                                <option value="Amla">
+                                <option value="Brahmi">
+                                <option value="Neem">
+                                <option value="Turmeric">
+                                <option value="Ginger">
+                            </datalist>
                         </label>
                         <label>Quantity (kg)
-                            <input type="number" step="0.01" id="harvest-qty" required>
+                            <input type="number" name="quantityKg" step="0.01" min="0.01" required>
+                        </label>
+                        <label>Harvest Method
+                            <select name="harvestMethod" required>
+                                <option value="">Select method</option>
+                                <option value="cultivated">Cultivated</option>
+                                <option value="wild_collection">Wild Collection</option>
+                                <option value="semi_wild">Semi-Wild</option>
+                            </select>
                         </label>
                         <div class="grid-2">
                             <label>Latitude
-                                <input type="number" step="0.000001" id="harvest-lat" required>
+                                <input type="number" name="latitude" step="0.000001" placeholder="Auto-detect or enter manually">
                             </label>
                             <label>Longitude
-                                <input type="number" step="0.000001" id="harvest-lng" required>
+                                <input type="number" name="longitude" step="0.000001" placeholder="Auto-detect or enter manually">
                             </label>
                         </div>
-                        <label>Photo (optional)
-                            <input type="file" id="harvest-photo" accept="image/*" capture="environment">
+                        <div class="location-actions">
+                            <button type="button" id="get-location-btn" class="btn btn-sm">
+                                <i class="fa-solid fa-location-crosshairs"></i>
+                                Get Current Location
+                            </button>
+                        </div>
+                        <label>Photos (optional)
+                            <input type="file" name="photos" accept="image/*" capture="environment" multiple>
+                            <small>You can select multiple photos</small>
                         </label>
+                        <div class="form-section">
+                            <h4>Additional Details (Optional)</h4>
+                            <label>Common Name
+                                <input type="text" name="commonName" placeholder="Local name">
+                            </label>
+                            <label>Weather Conditions
+                                <input type="text" name="weather" placeholder="e.g. Sunny, Rainy">
+                            </label>
+                            <label>Soil Type
+                                <input type="text" name="soilType" placeholder="e.g. Clay, Sandy">
+                            </label>
+                            <label>Notes
+                                <textarea name="notes" rows="3" placeholder="Any additional notes about the harvest"></textarea>
+                            </label>
+                        </div>
                         <div class="actions">
-                            <button type="submit" class="btn btn-secondary">Save Harvest</button>
+                            <button type="submit" class="btn btn-secondary">
+                                <i class="fa-solid fa-save"></i>
+                                Save Harvest
+                            </button>
                             <span id="harvest-status" class="badges"></span>
                         </div>
                     </form>
@@ -74,6 +116,39 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <!-- Connection Status Indicator -->
+    <div id="connection-status" class="connection-status online">Online</div>
+    
+    <!-- API Client -->
+    <script src="api.js"></script>
+    <!-- Safe Script (prevents refresh loops) -->
+    <script src="script-safe.js"></script>
+    
+    <!-- Page-specific script -->
+    <script>
+        // Add location detection functionality
+        document.addEventListener('DOMContentLoaded', () => {
+            const getLocationBtn = document.getElementById('get-location-btn');
+            const latInput = document.querySelector('input[name="latitude"]');
+            const lngInput = document.querySelector('input[name="longitude"]');
+            
+            if (getLocationBtn) {
+                getLocationBtn.addEventListener('click', async () => {
+                    utils.showLoading(getLocationBtn);
+                    
+                    try {
+                        const position = await utils.getCurrentLocation();
+                        latInput.value = position.latitude.toFixed(6);
+                        lngInput.value = position.longitude.toFixed(6);
+                        utils.showNotification('Location detected successfully!', 'success');
+                    } catch (error) {
+                        utils.showNotification('Failed to get location: ' + error.message, 'error');
+                    } finally {
+                        utils.showLoading(getLocationBtn, false);
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 </html>
